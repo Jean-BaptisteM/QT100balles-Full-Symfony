@@ -1,0 +1,86 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Items
+{% endblock %}
+
+{% block body %}
+	<div class="row justify-content-end">
+		<div class="row d-flex mx-2 col-12 col-lg-9 col-xl-6">
+			{% if app.user %}
+				<ul class="nav nav-pills col my-1 justify-content-end">
+					<li class="nav-item dropdown align-self-center">
+						<a class="cat-menu dropdown-toggle m-3" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajouter du contenu</a>
+						<div class="dropdown-menu" style="">
+							<a class="dropdown-item sous-menu-dropdown" href="{{ path('media_new') }}">Ajouter un Média</a>
+							<a class="dropdown-item sous-menu-dropdown" href="{{ path('person_new') }}">Ajouter une Personne</a>
+							<a class="dropdown-item sous-menu-dropdown" href="{{ path('item_new') }}">Ajouter un Item</a>
+						</div>
+					</li>
+				</ul>
+			{% endif %}
+			<form action="{{ path('year_filter') }}" class="form-inline m-1 col text-center">
+				<div class="d-flex">
+					<select name="filterYear" class="form-control m-1 my-sm-0 bg-filter text-light btn-search" id="filterYear">
+						<option selected>Trier par Année</option>
+						{% for year in 1980..1999 %}
+							<option value="{{ year }}">{{ year }}</option>
+						{% endfor %}
+					</select>
+					<div class="text-end">
+						<button class="btn btn-search m-1 my-sm-0" type="submit">
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Cards principales-->
+	<div class="row d-flex justify-content-around">
+		{% for item in items|slice(0,2) %}
+			<div class="card bloc-detail m-3 p-3 col-10 col-lg-5 card-purple">
+				<a href="{{ path('item_show', {id:item.id}) }}">
+					{% if item.image != null %}
+						<img src="{{ asset('assets/images/items/' ~ item.image) }}" class="img-persons-media d-block user-select-none rounded mb-3" width="100%" aria-label="Image" focusable="false" role="img"/>
+					{% else %}
+						<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-persons-media d-block user-select-none mx-auto rounded mb-3" width="90%" aria-label="Image" focusable="false" role="img"/>
+					{% endif %}
+				</a>
+				<h3 class="card-header bloc-contour-detail text-center">
+					<a href="{{ path('item_show', {id:item.id}) }}" class="link-card">{{ item.name }}</a>
+				</h3>
+				<div class="card-body">
+					<p class="card-text list-text">{{ item.preface|u.truncate(250, '...',false) }}</p>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+	<!--Liste qui se répète-->
+	<div class="row d-flex justify-content-around">
+		{% for item in items|slice(2) %}
+
+			<div class="card bloc-detail m-3 m-xxl-5 p-3 col-5 col-lg-3  col-xxl-2 card-purple">
+				<a href="{{ path('item_show', {id:item.id}) }}">
+					{% if item.image != null %}
+						<img src="{{ asset('assets/images/items/' ~ item.image) }}" class="img-persons-media d-block user-select-none rounded mb-3" aria-label="Image" focusable="false" role="img"/>
+					{% else %}
+						<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-persons-media d-block user-select-none rounded mb-3" aria-label="Image" focusable="false" role="img"/>
+					{% endif %}
+				</a>
+				<h3 class="card-header bloc-contour-detail text-center">
+					<a href="{{ path('item_show', {id:item.id}) }}" class="link-card">{{ item.name }}</a>
+				</h3>
+				<div class="card-body">
+					<p class="card-text list-text">{{ item.preface|u.truncate(150, '...',false) }}</p>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+	<!--Pagination-->
+	<div class="pagination d-flex justify-content-center m-2">
+		{{ knp_pagination_render(items, 'front/_pagination.html.twig') }}
+	</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Éditer cette Catégorie
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">Éditer cette Catégorie</h1>
+
+	{{ include('back/media_category/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+	{{ include('back/media_category/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin_media_category_index') }}" class="btn btn-purple mx-2 my-2 col-4">Retour à la liste</a>
+{% endblock %}

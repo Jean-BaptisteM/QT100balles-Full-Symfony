@@ -1,0 +1,12 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Ajouter un Média
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">Créer un nouveau Média</h1>
+
+	{{ include('back/media/_form.html.twig') }}
+
+	<a href="{{ path('admin') }}" class="btn btn-purple mx-2 my-2 col-4">Retour au BackOffice</a>
+{% endblock %}

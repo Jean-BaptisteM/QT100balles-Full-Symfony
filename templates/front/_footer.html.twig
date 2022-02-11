@@ -1,0 +1,16 @@
+{% set currentRoute = app.request.get('_route') %}
+
+<footer class="footer-dark mt-3 p-4 {{ currentRoute == 'app_login' ? 'footer-fix':'' }} {{ currentRoute == 'app_forgot_password_request' ? 'footer-fix':'' }} {{ currentRoute == 'contact' ? 'footer-fix':'' }}">
+	<div class="row align-items-center d-flex text-center">
+		<div class="col-4">
+			<a href="{{ path('contact') }}" class="link-card">Contact</a>
+		</div>
+		<div class="col-4">
+			<a href="{{ path('legal_mention') }}" class="link-card">Mentions légales</a>
+		</div>
+		<div class="col-4">
+			<a href="{{ path('sitemap') }}" class="link-card">Plan du site</a>
+		</div>
+	</div>
+	<p class="m-3 text-center">&copy; Quand t'avais 100 balles - 2021</p>
+</footer>

@@ -1,0 +1,103 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Plan du site
+{% endblock %}
+
+{% block body %}
+	<div class="col text-center">
+		<h1 id="detail-title">Plan du site</h1>
+	</div>
+</br>
+
+<div class="col-10 m-auto">
+	<p>
+		<ul>
+			<li>
+				<a href="{{ path('home') }}" class="nav-purple-style">Accueil</a>
+			</li>
+
+			<li>
+				<a href="{{ path('app_login') }}" class="nav-purple-style">Connexion utilisateur</a>
+			</li>
+
+			<li>
+				<a href="{{ path('user_new') }}" class="nav-purple-style">Formulaire d’enregistrement</a>
+			</li>
+
+			{% if app.user %}
+				<li>
+					<a href="{{ path('user_show', {id:app.user.id}) }}"  class="nav-purple-style">Profil utilisateur</a>
+				</li>
+			{% else %}
+				<li>
+					<a href="{{ path('app_login') }}"  class="nav-purple-style">Profil utilisateur</a>
+				</li>
+			{% endif %}
+
+			<li>
+				<a href="" class="nav-purple-style">Quiz</a>
+				<ul>
+					<li><a href="" class="nav-purple-style">Jeux</a></li>
+
+					<li><a href="" class="nav-purple-style">Scores</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="" class="nav-purple-style">Catégories</a>
+			</li>
+			<ul>
+				<li>
+					<a href="{{ path('media_liste', {id:1})}}" class="nav-purple-style">Films</a>
+				</li>
+				<li>
+					<a href="{{ path('media_liste', {id:2})}}" class="nav-purple-style">Séries TV</a>
+				</li>
+				<li>
+					<a href="{{ path('media_liste', {id:3})}}" class="nav-purple-style">Dessins Animés</a>
+				</li>
+				<li>
+					<a href="{{ path('media_liste', {id:4})}}" class="nav-purple-style">Émissions</a>
+				</li>
+				<li>
+					<a href="{{ path('item_liste', {id:3})}}" class="nav-purple-style">Jouets</a>
+				</li>
+				<li>
+					<a href="{{ path('item_liste', {id:2})}}" class="nav-purple-style">Objets</a>
+				</li>
+				<li>
+					<a href="{{ path('item_liste', {id:1})}}" class="nav-purple-style">Bonbons</a>
+				</li>
+			</ul>
+			<li>
+				<a href="" class="nav-purple-style">Proposer un contenu</a>
+			</li>
+			<ul>
+				<li>
+					<a href="{{ path('media_new') }}" class="nav-purple-style">Ajouter un nouveau Média</a>
+				</li>
+				<li>
+					<a href="{{ path('person_new') }}" class="nav-purple-style">Ajouter une Personne
+					</a>
+				</li>
+				<li>
+					<a href="{{ path('item_new') }}" class="nav-purple-style">Ajouter un Item</a>
+				</li>
+			</ul>
+			<li>
+				<a href="{{ path('legal_mention') }}" class="nav-purple-style">Mentions légales</a>
+			</li>
+
+			<li>
+				<a href="{{ path('contact') }}" class="nav-purple-style">Contact</a>
+			</li>
+
+			<li>
+				<a href="{{ path('sitemap') }}" class="nav-purple-style">Plan du site</a>
+			</li>
+
+			<li>
+				<a download href="{{ path('charte_download') }}" class="nav-purple-style">Charte de respect et de bienséance</a>
+			</li>
+		</ul>
+	</p>
+</div></br>{% endblock %}

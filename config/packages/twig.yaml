@@ -1,0 +1,16 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['bootstrap_5_layout.html.twig']
+
+
+    globals:
+        # Definition of our service in a Twig global variable
+        # in order to be able to use it in any Twig template
+        file_service : '@App\Service\FileService'
+        # Declaration of our service's wiring in a Twig global variable
+        picture_path : '%picture_path%'
+
+when@test:
+    twig:
+        strict_variables: true
+

@@ -1,0 +1,67 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<div>
+			<img src="" alt="">
+		</div>
+
+		<div class="row d-flex justify-content-around">
+
+			<div class="m-3 p-3 col-10 col-lg-5">
+				<form method="post">
+					{% if error %}
+						<div class="alert btn-logout">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+
+					{% if app.user %}
+						<div class="mb-3 text-center">
+							<h5 class="font-weight-normal user-connect-title">Vous êtes déjà connecté en tant que
+								{{ app.user.username }}</h5>
+							<a href="{{ path('app_logout') }}" class="btn btn-lg btn-purple btn-block">Se déconnecter</a>
+						</div>
+					{% else %}
+
+						<h1 class="h3 mb-3 font-weight-normal user-connect-title">Se connecter</h1>
+						<label for="inputNickname" class="form-purple my-2">Pseudo</label>
+						<input type="text" value="{{ last_username }}" name="nickname" id="inputNickname" class="form-control form-purple-input my-2" autocomplete="username" required autofocus>
+						<label for="inputPassword" class="form-purple mt-2">Mot de passe</label>
+						<input type="password" name="password" id="inputPassword" class="form-control form-purple-input my-2" autocomplete="current-password" required>
+						<a href="{{ path('app_forgot_password_request') }}" class="btn btn-purple">Mot de passe oublié ?</a>
+
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+						{# Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+												                    See https://symfony.com/doc/current/security/remember_me.html
+
+						<div class="checkbox mb-3">
+							<label>
+								<input type="checkbox" name="_remember_me">
+								Remember me
+							</label>
+						</div> #}
+
+						<button class="btn btn-lg btn-purple m-3" type="submit">
+							Valider
+						</button>
+					</form>
+				</div>
+
+				<div class="m-3 p-3 col-10 col-lg-5">
+					<body class="text-center">
+						<h1 class="h3 mb-3 font-weight-normal user-connect-title">Nouvel utilisateur ?</h1>
+						<p>Créer votre compte pour pouvoir personnaliser votre profil, commenter, ajouter du contenu...</p>
+						<a class="btn btn-lg btn-purple btn-block" href="{{ path('user_new') }}" type="submit">Créer un compte</a>
+					</body>
+				</div>
+
+			{% endif %}
+		</div>
+	</div>
+
+{% endblock %}

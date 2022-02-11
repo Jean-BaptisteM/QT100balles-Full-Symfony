@@ -1,0 +1,40 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Commentaire n° {{ commentMedia.id }}
+{% endblock %}
+
+
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">Commentaire de {{ commentMedia.users.nickName }} sur {{ commentMedia.medias.title }}</h1>
+
+	<table class="table my-2 card-purple">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ commentMedia.id }}</td>
+			</tr>
+			<tr>
+				<th>Utilisateur</th>
+				<td>{{ commentMedia.users.nickName }}</td>
+			</tr>
+			<tr>
+				<th>Contenu</th>
+				<td>{{ commentMedia.content }}</td>
+			</tr>
+			{% if commentMedia.image != null %}
+				<tr>
+					<th>Image</th>
+					<td><img src="{{ asset('assets/images/comments/' ~ commentMedia.image) }}" class="max-image-size-back"></td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Posté le</th>
+				<td>{{ commentMedia.createdAt ? commentMedia.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+	</table>
+
+	{{ include('back/comment/media/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin_comment_media_index') }}" class="btn btn-purple mx-2 my-2 col-4">Retour à la liste</a>
+
+{% endblock %}

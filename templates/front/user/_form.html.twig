@@ -1,0 +1,33 @@
+{{ form_start(form,{'attr': {'class': 'form-purple'} }) }}
+
+
+	{{ form_row(form.nickname)}}
+	{{ form_row(form.password)}}
+	<div>Votre mot de passe doit contenir au moins :
+		<ul>
+			<li id="lowercase" class="invalid-password">Une Minuscule</li>
+			<li id="uppercase" class="invalid-password">Une Majuscule</li>
+			<li id="number" class="invalid-password">Un Chiffre</li>
+			<li id="special" class="invalid-password">Un Caratère spécial</li>
+			<li id="length" class="invalid-password">Faire au moins 8 caractères</li>
+		</ul>
+	</div>
+	{{ form_row(form.email)}}
+	{{ form_row(form.image)}}
+	{{ form_row(form.description)}}
+	<a href="{{ asset('assets/charte_download.pdf') }}">lire la charte</a>
+{% if user.charte == false %}
+	<p>J'ai lu la charte et j'accepte les conditions *
+		{{form_widget(form.charte)}}</p>
+
+{% else %}
+
+	{{form_widget(form.charte, {'attr': {'style': 'display:none'}}) }}
+
+{% endif %}
+
+{{ form_widget(form,{'attr': {'class': 'form-purple'} }) }}
+<p class="form-purple">( * Champs obligatoires )</p>
+<button class="btn btn-purple mx-auto my-2 col-4" id="password-validate">{{ button_label|default('Créer') }}</button>
+
+{{ form_end(form) }}

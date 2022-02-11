@@ -1,0 +1,142 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}{{ item.name }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-fluid" witdh="90%">
+		<div
+			class="row d-flex justify-content-around">
+
+			<!--icon favori-->
+			<div
+				class="col-4 text-center my-4">
+				<!-- checking if the user is connected with an user role -->
+				{% if is_granted("ROLE_USER") %}
+					<!-- we browse the favorites in the item user table -->
+					{% for itemfavorites in item.users %}
+						<!-- if the id of the favorite matches the id of the user -->
+						{% if itemfavorites.id == app.user.id %}
+							<a href="{{ path('item_remove_favorite', {id : item.id}) }}">
+								<i class="bi bi-heart-fill"></i>
+							</a>
+						{% else %}
+							<a href="{{ path('item_add_favorite', {id : item.id}) }}">
+								<i class="bi bi-heart"></i>
+							</a>
+						{% endif %}
+					{% else %}
+						<a href="{{ path('item_add_favorite', {id : item.id}) }}">
+							<i class="bi bi-heart"></i>
+						</a>
+					{% endfor %}
+				{% else %}
+					<a href="" onclick="return confirm('Connectez-vous pour ajouter ce contenu en favoris ;)')">
+						<i class="bi bi-heart"></i>
+					</a>
+				{% endif %}
+			</div>
+			<!--title -->
+			<div class="col-4 text-center my-4">
+				<h1 id="detail-title">{{ item.name }}</h1>
+			</div>
+			<!--icons partage-->
+			<div class="col-4 text-center my-4 d-flex">
+				{# <i class="bi bi-twitter mx-1" style="font-size: 2rem;"></i>
+				<i class="bi bi-facebook mx-1" style="font-size: 2rem;"></i>
+				<i class="bi bi-share-fill mx-1" style="font-size: 2rem;"></i> #}
+			</div>
+		</div>
+	</div>
+
+	<!-- detail de l'annonce -->
+	<div class=" row m-5 d-flex justify-content-center pt-2">
+
+		<!-- bloc image -->
+		<div class="col-10 col-xxl-5">
+			{% if item.image != null %}
+				<img src="{{ asset('assets/images/items/' ~ item.image) }}" class="img-item d-block user-select-none mx-auto mb-2" aria-label="Image" focusable="false" role="img"/>
+			{% else %}
+				<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-item d-block user-select-none mx-auto mb-2" aria-label="Image" focusable="false" role="img">
+			{% endif %}
+		</div>
+
+		<!-- bloc informations -->
+		<div class="col-10 col-xxl-6 pt-5 pt-xxl-0">
+			<div class="row d-flex justifiy-content-between">
+			{# <!-- Vote étoiles -->
+				<div class="col"> 
+				<div class=" m-4" style="color: orange;">
+					<i class="bi bi-star-fill"></i>
+					<i class="bi bi-star-fill"></i>
+					<i class="bi bi-star-fill"></i>
+					<i class="bi bi-star-fill"></i>
+					<i class="bi bi-star-half"></i>
+				</div>
+			</div> #}
+			{# </div> #}
+
+			<div class="card bloc-detail">
+				<div class="card-body row d-flex justify-content-between m-3">
+
+					<div class="col-8">
+						<!-- titre préface -->
+						<h4 class="card-title-detail text-light">Mais qu'est ce que c'était ?</h4>
+					</div>
+
+					<div class="col-3">
+						<!-- Année -->
+						<div class="box d-flex justify-content-end">
+							<form action="{{ path('year_filter') }}" class="ruban col-2 text-end">
+								<span>
+									<input name="filterYear" type="hidden" value="{{ item.year }}">
+									<button type="submit" class="year-tag">{{ item.year }}</button>
+								</span>
+							</form>
+						</div>
+					</div>
+					<!-- contenu préface -->
+					<h5 class="card-text-item m-3 mb-5">{{ item.preface }}</h5>
+
+					<div class="bloc-contour-detail">
+						<!-- titre publicité -->
+						<div class="card-title-detail text-center text-light p-3">
+							Publicité de l'époque
+						</div>
+						<!-- Video -->
+						{% if item.video != null %}
+							<div class="video-item embed-responsive embed-responsive-4by3 text-center m-4">
+								<iframe width="560" height="315" src="{{ item.video }}" frameborder="0" allow="autoplay; encrypted-media" class="rounded" allowfullscreen></iframe>
+							</div>
+						{% else %}
+							<h3 class="text-center text-light m-2">Aucune Pub disponible pour
+								{{ item.name }}
+								désolé<br> Mais pourquoi est-il si méchant? Parcequeeeee</h3>
+							<div class="embed-responsive embed-responsive-16by9 text-center m-4">
+								<iframe width="640" height="360" src="https://www.youtube.com/embed/EHY4I29jxjo" frameborder="0" allow="autoplay; encrypted-media" class="rounded" allowfullscreen></iframe>
+							</div>
+						{% endif %}
+					</div>
+
+					<!-- bannière boutique -->
+					<div class="bloc-contour-detail mt-3">
+						<div class="card-partners-item text-center text-light p-3">
+							<i class="bi bi-arrow-down-circle"></i>
+							Bonbons et jouets de votre enfance
+							<i class="bi bi-arrow-down-circle"></i>
+						</div>
+						<a class="navbar-brand px-0" href="https://www.generation-souvenirs.com/" target="_blank">
+							<img src="{{ asset('../assets/images/generation-souvenir.jpeg') }}" class=" m-auto p-3" alt="..." style="width: 100%;">
+						</a>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- commentaires -->
+	{% include "front/item/_item_comments.html.twig" %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Ajouter une Personne
+{% endblock %}
+{% block body %}
+    <h1 class="text-center my-4" id="detail-title">Créer une Nouvelle Personne</h1>
+
+    {{ include('back/person/_form.html.twig') }}
+
+    <a href="{{ path('admin_person_index') }}" class="btn btn-purple my-2 mx-2 col-4">Retour à la liste</a>
+{% endblock %}

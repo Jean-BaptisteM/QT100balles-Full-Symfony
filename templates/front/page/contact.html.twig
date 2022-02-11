@@ -1,0 +1,29 @@
+{% extends "front/base.html.twig" %}
+
+{% block title %}Nous contacter
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-fluid">
+		<h1 class="text-center" id="detail-title">Nous contacter</h1>
+
+
+		<div class="col-sm-11 col-lg-5 m-auto">
+
+			{{ form_start(form) }}
+			{{ form_widget(form,{'attr': {'class': 'form-purple'} }) }}
+			{# we show error messages from the form #}
+			{{ form_errors(form) }}
+			<p class="form-purple">( * Champs obligatoires )</p>
+			<button class="btn btn-purple my-2 col-4">{{ button_label|default('Envoyer') }}</button>
+
+			{{ form_end(form) }}
+
+
+		</div>
+
+	</div>
+
+
+{% endblock %}

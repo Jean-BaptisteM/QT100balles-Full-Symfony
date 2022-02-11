@@ -1,0 +1,15 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Email de réinitialisation de mot de passe envoyé{% endblock %}
+
+{% block body %}
+<div class="container"></div>
+    <p class="card-preface-media">
+        Si un compte correspond à votre email existant, alors un email vous a été envoyé qui contient un lien qui vous permettra de réinitialiser votre mot de passe.
+        Ce lien expirera dans
+        {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p class="card-preface-media">Si vous n'avez pas reçu d'email, vérifiez dans vos spam ou <a class="btn btn-purple btn-arial mx-2" href="{{ path('app_forgot_password_request') }}">réessayez</a></p>
+</div>    
+{% endblock %}
+ 

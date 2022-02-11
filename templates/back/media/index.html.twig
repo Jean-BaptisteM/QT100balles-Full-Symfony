@@ -1,0 +1,49 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Médias
+{% endblock %}
+{% block body %}
+
+	<div class="col-12 text-center my-4">
+		<h1 id="detail-title">Liste des Entrées</h1>
+	</div>
+	<div class="text-end">
+		<a href="{{ path('admin_media_new') }}"class="btn btn-purple my-2 col-3">Ajouter</a>
+	</div>
+	<table class="table table-hover justify-content-end card-purple">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Titre</th>
+				<th scope="col">Création</th>
+				<th scope="col">Dernière modification</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for media in medias %}
+				<tr class="table-{{ cycle(['primary', 'secondary'], loop.index) }} card-purple">
+					<th scope="row">{{ media.id }}</th>
+					<td>{{ media.title }}</td>
+					<td>{{ media.createdAt|date('d/m/Y') }}</td>
+					<td>{{ media.updatedAt ? media.updatedAt|date('d/m/Y') }}</td>
+					<td class="text-end">
+              			<a href="{{ path('admin_media_show', {id: media.id}) }}" class="fs-4 btn-back-tool"
+                			><i class="fa fa-eye" aria-hidden="true"></i></a>
+              			<a href="{{ path('admin_media_edit', {id: media.id}) }}" class="fs-4 btn-back-tool"
+                			><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              			<form action="{{ path('admin_media_delete', {id: media.id}) }}" class="d-inline" method="post">
+                			<button class="btn btn-back-tool p-0 mb-2 fs-4"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                			<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+              			</form>
+            		</td>
+				</tr>
+		{% else %}
+			<tr>
+				<td colspan="16">Aucune donnée trouvée</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

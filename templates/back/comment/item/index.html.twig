@@ -1,0 +1,47 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Commentaires des Items
+{% endblock %}
+{% block body %}
+
+	<div class="col-12 text-center my-4">
+		<h1 id="detail-title">Liste des Commentaires des Items</h1>
+	</div>
+
+	<table class="table table-hover card-purple">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Utilisateur</th>
+				<th scope="col">Titre du Item</th>
+				<th scope="col">Commentaire</th>
+                <th scope="col">Création</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+        {% for comment in commentItems %}
+				<tr class="table-{{ cycle(['primary', 'secondary'], loop.index) }} card-purple">
+					<th scope="row">{{ comment.id }}</th>
+					<td>{{ comment.users.nickName }}</td>
+					<td>{{ comment.items.name }}</td>
+                    <td>{{ comment.content }}</td>
+					<td>{{ comment.createdAt|date('d/m/Y') }}</td>
+					<td class="text-end">
+              			<a href="{{ path('admin_comment_item_show', {id: comment.id}) }}" class="fs-4 btn-back-tool"
+                			><i class="fa fa-eye" aria-hidden="true"></i></a>
+              			<form action="{{ path('admin_comment_item_delete', {id: comment.id}) }}" class="d-inline" method="post">
+                			<button class="btn btn-back-tool p-0 mb-2 fs-4"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                			<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+              			</form>
+            		</td>
+				</tr>
+		{% else %}
+			<tr>
+				<td colspan="16">Aucune commentaire trouvé pour les Items</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

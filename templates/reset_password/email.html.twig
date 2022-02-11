@@ -1,0 +1,9 @@
+<h1 id="detail-title">Bonjour !</h1>
+
+<p class="card-preface-media">Pour réinitialiser votre mot de passe, cliquez sur le lien suivant</p>
+
+<a class="btn btn-purple"href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p class="card-preface-media">Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p class="card-preface-media">Merci (ᵔ◡ᵔ)</p>

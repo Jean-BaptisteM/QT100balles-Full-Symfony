@@ -1,0 +1,18 @@
+{% set currentRoute = app.request.get('_route') %}
+
+{% extends "front/base.html.twig" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <div class="col-12 text-center my-4">
+		<h1 id="detail-title">Créer mon Compte</h1>
+	</div>
+
+    {{ include('front/user/_form.html.twig', {'button_label': 'Valider'}) }}
+
+    <a class="btn btn-purple mx-auto my-2 col-4" href="{{ path('app_login') }}">Retour au menu précédent</a>
+  </div>
+{% endblock %}

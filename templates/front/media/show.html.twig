@@ -1,0 +1,192 @@
+{% set currentRoute = app.request.get('_route') %}
+
+{% extends 'front/base.html.twig' %}
+
+{% block title %}
+	{{ media.title }}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid" witdh="90%">
+		<div
+			class="row d-flex justify-content-around">
+
+			<!--icon favori-->
+			<div
+				class="col-4 text-center my-4">
+				<!-- checking if the user is connected with an user role -->
+				{% if is_granted("ROLE_USER") %}
+					<!-- we browse the favorites in the media user table -->
+					{% for mediafavorites in media.users %}
+						<!-- if the id of the favorite matches the id of the user -->
+						{% if mediafavorites.id == app.user.id %}
+							<a href="{{ path('media_remove_favorite', {id : media.id}) }}">
+								<i class="bi bi-heart-fill"></i>
+							</a>
+						{% else %}
+							<a href="{{ path('media_add_favorite', {id : media.id}) }}">
+								<i class="bi bi-heart"></i>
+							</a>
+						</a>
+					{% endif %}
+				{% else %}
+					<a href="{{ path('media_add_favorite', {id : media.id}) }}">
+						<i class="bi bi-heart"></i>
+					</a>
+				</a>
+			{% endfor %}
+		{% else %}
+			<a href="" onclick="return confirm('Connectez-vous pour ajouter ce contenu en favoris ;)')">
+				<i class="bi bi-heart"></i>
+			</a>
+		{% endif %}
+	</div>
+
+	<!--title -->
+	<div class="col-4 text-center my-4">
+		<h1 id="detail-title">{{ media.title }}</h1>
+	</div>
+
+	<!--icons partage-->
+	<div class="col-4 text-center my-4 d-flex">
+		{# <i class="bi bi-twitter mx-1" style="font-size: 2rem;"></i>
+		<i class="bi bi-facebook mx-1" style="font-size: 2rem;"></i>
+		<i class="bi bi-share-fill mx-1" style="font-size: 2rem;"></i> #}
+	</div>
+</div></div><!-- detail de l'annonce --><div
+class=" row m-5 d-flex justify-content-center pt-2">
+
+<!-- bloc image -->
+<div class="col-10 col-xxl-5">
+	{% if media.image != null %}
+		<img src="{{ media.image }}" class="img-media d-block user-select-none mx-auto" aria-label="Image" focusable="false" role="img"/>
+	{% else %}
+		{# use of the service set up in App\Service\FileService.php to check whether a file exists or not #}
+		{% if  file_service.exist(asset('api/' ~ media.originalTitle ~ '.jpg')) == true %}
+			<img src="{{ asset('assets/images/api/' ~ media.originalTitle ~ '.jpg') }}" class="img-media d-block user-select-none mx-auto  align-self-center" aria-label="Image" focusable="false" role="img"/>
+		{% else %}
+			<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-media d-block user-select-none mx-auto  align-self-center" width="90%" aria-label="Image" focusable="false" role="img"/>
+		{% endif %}
+	{% endif %}
+</div>
+
+<!-- bloc information -->
+<div
+	class="col-10 col-xxl-6 pt-5 pt-xxl-0">
+
+	<!-- bloc tag genre et tag année ensemble-->
+	<div class="card bloc-detail">
+		<div
+			class="card-body row d-flex justify-content-between m-3">
+
+			<!-- tag du genre -->
+			<div class="col-9 d-flex flex-row ruban">
+				{% for type in media.types %}
+					<form action="{{ path('type_filter') }}">
+						<input name="filterType" type="hidden" value="{{ type.name }}">
+						<button type="submit" class="type-media my-2 mx-1">{{ type.name }}</button>
+					</form>
+				{% endfor %}
+			</div>
+
+
+			<!-- Année -->
+			<div class="col-3">
+				<form action="{{ path('year_filter') }}" class="text-end">
+					<input name="filterYear" type="hidden" value="{{ media.year }}">
+					<button type="submit" class="year-tag m-2">{{ media.year }}</button>
+				</form>
+			</div>
+
+			<!-- fin du bloc tag genre et tag année ensemble-->
+		</div>
+
+
+		<!-- durée ou nbre saisons / nbre episodes / durée d'un épisode -->
+		<div
+			class="row text-center text-light">
+			<!-- Durée -->
+			{% if media.duration != null %}
+				<div class="col-3 mx-3">
+					<p>Durée :
+						{{ media.duration }}
+						min</p>
+				</div>
+			{% endif %}
+			<!-- Nombre de saison -->
+			{% if media.nbSeason != null %}
+				<div class="col-3 mx-3">
+					<p>
+						{{ media.nbSeason }}
+						saison(s)
+					</p>
+				</div>
+			{% endif %}
+			<!-- Nombre d'épisodes -->
+			{% if media.nbEpisode != null %}
+				<div class="col-3 mx-3 text-center">
+					<p>
+						{{ media.nbEpisode }}
+						épisodes
+					</p>
+				</div>
+			{% endif %}
+			<!-- Durée d'un épisode -->
+			{% if media.durationEpisode != null %}
+				<div class="col-3 mx-3 text-end">
+					<p>
+						{{ media.durationEpisode }}
+						min par épisode
+					</p>
+				</div>
+			{% endif %}
+		</div>
+
+		<!-- synopsis -->
+		<div class="bloc-contour-detail mt-3 p-3 m-3">
+			<h5 class="card-title-detail text-center text-light p-3">Synopsis</h5>
+			<p class="card-resume-detail m-1">{{ media.synopsis }}</p>
+		</div>
+
+
+		<!-- Préface -->
+		<div class="col-10 m-auto">
+			{% if media.preface != null %}
+				<p class="card-preface-media">{{ media.preface }}</p>
+			{% endif %}
+		</div>
+
+		<!-- Anecdote -->
+		{% if media.anecdote != null %}
+			<div class="bloc-contour-detail mt-3 p-3 m-3">
+				<h5 class="card-title-detail text-center text-light p-3">Anecdote</h5>
+				<p class="card-resume-detail m-1">{{ media.anecdote }}</p>
+			</div>
+		{% endif %}
+
+
+	</div>
+
+	<!-- FIN DU BLOC INFORMATIONS -->
+</div>
+
+<!-- Video -->
+{% if media.trailer != null %}
+	<div class="embed-responsive embed-responsive-16by9 text-center m-4">
+		<iframe width="640" height="360" src={{ media.trailer }} frameborder="0" allow="autoplay; encrypted-media" class="rounded" allowfullscreen></iframe>
+	</div>
+{% else %}
+	<h3 class="card-title-detail text-center text-light m-2">Aucun trailer disponible pour
+		{{ media.title }}
+		désolé,<br> un petit générique Jean Mineur pour nous faire pardonner.</h3>
+	<div class="embed-responsive embed-responsive-16by9 text-center m-4">
+		<iframe width="640" height="360" src="https://www.youtube.com/embed/qBpA-BYxjZ8" frameborder="0" allow="autoplay; encrypted-media" class="rounded" allowfullscreen></iframe>
+	</div>
+{% endif %}
+
+<!-- menu acteurs/réalisateurs/résumé -->
+{% include "front/media/_media_details_menu.html.twig" %}
+
+<!-- commentaires -->
+{% include "front/media/_media_comments.html.twig" %}
+{% endblock %}

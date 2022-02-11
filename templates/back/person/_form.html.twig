@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_widget(form,{'attr': {'class': 'form-purple'} }) }}
+    <p class="form-purple">( * Champs obligatoires )</p>
+    <button class="btn btn-purple my-2 col-4">{{ button_label|default('Créer') }}</button>
+{{ form_end(form) }}

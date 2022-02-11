@@ -1,0 +1,15 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Éditer ce Média
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">Éditer ce Média</h1>
+
+	{{ include('back/media/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+	{{ include('back/media/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin') }}" class="btn btn-purple my-2 mx-2 col-4">Retour au backoffice</a>
+{% endblock %}
+

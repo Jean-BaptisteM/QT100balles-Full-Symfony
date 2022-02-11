@@ -1,0 +1,87 @@
+{% extends "front/base.html.twig" %}
+
+{% block title %}
+	{{ user.nickname }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container py-5">
+
+		<div class="row d-flex justify-content-around">
+
+          
+			<div class="card bloc-detail mb-3 py-5">
+				<div class="row d-flex justify-content-around">
+				 <!-- avatar -->
+					<div class="m-3 p-3 col-11 col-lg-5 text-center">
+						{% if user.image != null %}
+							{# We get the path of the images folder from the .env and we store it in a variable #}
+							{% set userImage = app.request.server.get('USER_IMAGES') %}
+							<img src="{{ asset(userImage ~ '/' ~ user.image) }}" class="card-img rounded-lg" alt="..." style="width: 20rem, center;">
+							{# <a class="btn btn my-2 btn-purple" href="{{ path('user_edit', {'id': user.id}) }}" type="button">Modifier mon avatar</a> #}
+						{% else %}
+						<div class="row flex-direction-row text-center">
+						<img src="{{ asset('assets/images/utilisateurs/anonymous.jpg') }}" class="card-img rounded-lg card-purple" alt="..." style="width: 20rem, center;">
+						{# <a class="btn btn my-2 btn-purple" href="{{ path('user_edit', {'id': user.id}) }}" type="button">Modifier l'avatar par défaut</a> #}
+						</div>
+						{% endif %}
+					</div>
+
+					<div class="m-3 p-3 col-11 col-lg-6 text-center">
+						<!-- pseudo -->
+                           <h1 id="detail-title" class="mb-5">{{ user.nickName }}</h1>
+				    	<!-- anecdote -->
+						<div class="bloc-contour-detail p-2">
+						   <h5 class="card-title card-title-detail text-light my-2">Quand j'étais petit(e) je croyais que :</h5>
+						        {% if user.description != null %}
+							       <p class="card-text anecdote-rep text-dark my-2">{{ user.description }}</p>
+								   {# <a class="btn btn my-2 btn-purple" href="{{ path('user_edit', {'id': user.id}) }}" type="button">Modifier votre anecdote</a> #}
+								   {% else %}
+								   <a class="text-light link-profil pt-4" href="{{ path('user_edit', {'id': user.id}) }}" type="button">ヾ(´・ω・)ノ゛ Complétez votre anecdote en modifiant votre profil ヾ(・ω・`)ノ</a>
+						         {% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="row d-flex justify-content-around">
+
+	<div class="card bloc-detail text-dark fw-bold m-3 p-3 col-10 col-lg-5">
+		<div class="card-header bloc-contour-detail">
+			Mes films/séries préférés :
+		</div>
+		<ul class="list-group list-group-flush">
+			{% for media in user.medias %}
+				<li class="list-group-item">
+					<a href="{{ path('media_show', {id : media.id}) }}">{{ media.title }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="card bloc-detail text-dark fw-bold m-3 p-3 col-10 col-lg-5">
+		<div class="card-header bloc-contour-detail">
+			Mes jouets/bonbons favoris :
+		</div>
+		<ul class="list-group list-group-flush">
+			{% for item in user.items %}
+				<li class="list-group-item">
+					<a href="{{ path('item_show', {id : item.id}) }}">{{ item.name }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div class="row d-flex justify-content-around">
+	<div class="m-3 p-1 col-10 col-lg-4 text-center">
+		<a class="btn btn-purple mx-" href="{{ path('user_edit', {'id': user.id}) }}" type="button">Modifier mon compte</a>
+	</div>
+	<div class="m-3 p-1 col-10 col-lg-4 text-center">
+		{{ include('front/user/_delete_form.html.twig') }}
+	</div>
+</div>{% endblock %}

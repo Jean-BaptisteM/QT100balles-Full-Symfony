@@ -1,0 +1,140 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+	{{ media.title }}
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">{{ media.title }}</h1>
+
+	<table class="table my-2 card-purple">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ media.id }}</td>
+			</tr>
+			<tr>
+				<th>Titre</th>
+				<td>{{ media.title }}</td>
+			</tr>
+			<tr>
+				<th>Titre Original</th>
+				<td>{{ media.originalTitle }}</td>
+			</tr>
+			<tr>
+				<th>Catégorie</th>
+				<td>{{ media.mediaCategories.name }}</td>
+			</tr>
+			<tr>
+				<th>Année</th>
+				<td>{{ media.year }}</td>
+			</tr>
+			<tr>
+				<th>Genre</th>
+				<td>
+					{% for type in media.types %}
+						{{ type.name }}<br>
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<th>Durée</th>
+				<td>
+					{% if media.duration != null %}
+						{{ media.duration }}
+						min
+					{% endif %}
+				</td>
+			</tr>
+			{% if media.nbSeason != null %}
+				<tr>
+					<th>Nombre de saison</th>
+					<td>
+						{{ media.nbSeason }}
+						saisons
+					</td>
+				</tr>
+			{% endif %}
+			{% if media.nbEpisode != null %}
+				<tr>
+					<th>Nombre d'épisodes</th>
+					<td>
+						{{ media.nbEpisode }}
+						épisodes
+					</td>
+				</tr>
+			{% endif %}
+			{% if media.durationEpisode != null %}
+				<tr>
+					<th>Durée d'un épisode</th>
+					<td>
+						{{ media.durationEpisode }}
+						min
+					</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Personnes associées</th>
+				<td>
+					{% for person in media.persons %}
+						{{ person.firstname }}
+						{{ person.lastname }}<br>
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<th>Image de l'API</th>
+				{% if  file_service.exist(asset('api/' ~ media.originalTitle ~ '.jpg')) == true %}
+					<td><img src="{{ asset('assets/images/api/' ~ media.originalTitle ~ '.jpg') }}" class="max-image-size-back"/></td>
+				{% else %}
+					<td>Pas d'image d'API 	╮(︶︿︶)╭</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<th>Image de la BDD</th>
+				{% if media.image != null %}
+					<td><img src="{{ media.image }}" class="max-image-size-back"/></td>
+				{% else %}
+					<td>Pas d'image en BDD ╮(︶︿︶)╭</td>
+				{% endif %}
+			</tr>
+			{% if media.preface != null %}
+				<tr>
+					<th>Préface</th>
+					<td>{{ media.preface }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Synopsis</th>
+				<td>{{ media.synopsis }}</td>
+			</tr>
+			<tr>
+				<th>Résumé</th>
+				<td>{{ media.summary }}</td>
+			</tr>
+			{% if media.anecdote != null %}
+				<tr>
+					<th>Anecdote</th>
+					<td>{{ media.anecdote }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Trailer</th>
+				{% if media.trailer != null %}
+					<td class="embed-responsive embed-responsive-16by9 text-center m-4">
+						<iframe width="640" height="360" src={{ media.trailer }} frameborder="0" allow="autoplay; encrypted-media" class="rounded" allowfullscreen></iframe>
+					</td>
+				{% else %}
+					<td>Pas de Trailer en BDD ╮(︶︿︶)╭</td>
+				{% endif %}
+			</tr>
+		</tbody>
+	</tr>
+	<tr>
+		<th>Créé le</th>
+		<td>{{ media.createdAt ? media.createdAt|date('d/m/Y') : '' }}</td>
+	</tr>
+	<tr>
+		<th>Mis à jour le</th>
+		<td>{{ media.updatedAt ? media.updatedAt|date('d/m/Y') : '' }}</td>
+	</tr>
+</tbody></table><a href="{{ path('admin_media_edit', {id:media.id}) }}" class="btn btn-purple mx-2 my-2 col-4">Modifier</a>{{ include('back/media/_delete_form.html.twig') }}<a href="{{ path('admin') }}" class="btn btn-purple mx-2 my-2 col-4">Retour au BackOffice</a>{% endblock %}

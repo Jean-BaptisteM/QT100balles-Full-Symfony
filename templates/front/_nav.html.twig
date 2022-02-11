@@ -1,0 +1,84 @@
+{% set currentRoute = app.request.get('_route') %}
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-5">
+	<div class="container-fluid">
+
+	<!-- logo -->
+		<a class="navbar-brand px-0 text-center" href="{{ path('home') }}"><img src="{{ asset('assets/images/logo.png') }}" width="50%" alt="logo" class="{{ currentRoute == 'home' ? 'animate__animated animate__tada':'' }}"/></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+   <!-- dropdown -->
+		<div class="collapse navbar-collapse" id="navbarColor02">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item dropdown">
+					<a class="cat-menu dropdown-toggle d-none d-lg-block mx-4" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Catégories </a>
+					<a class="nav-link dropdown-toggle d-lg-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
+					<div class="dropdown-menu">
+					{% if app.user %}
+					<a class="dropdown-item d-lg-none" href="{{ path('user_show', {id:app.user.id}) }}">Mon Profil</a>
+						<a class="dropdown-item d-lg-none" href="{{ path('app_logout') }}">Déconnexion</a>
+					{% else %}
+						<a class="dropdown-item d-lg-none" href="{{ path('app_login') }}">Connexion</a>
+						<a class="dropdown-item d-lg-none" href="{{ path('user_new') }}">S'enregistrer</a>
+					{% endif %}
+						<div class="dropdown-divider d-lg-none"></div>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('media_liste', {id:1})}}">Films</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('media_liste', {id:2})}}">Séries TV</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('media_liste', {id:3})}}">Dessins animés</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('media_liste', {id:4})}}">Emissions</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('item_liste', {id:3})}}">Jouets</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('item_liste', {id:2})}}">Objets</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('item_liste', {id:1})}}">Bonbons</a>
+						{# <div class="dropdown-divider"></div>
+						<a class="dropdown-item d-lg-none" href="#">Quiz</a> #}
+						<div class="dropdown-divider d-lg-none"></div>
+						{% if is_granted('ROLE_ADMIN') %}
+						<a class="dropdown-item d-lg-none" href="{{ path('admin')}}">Backoffice</a>
+						{% endif %}
+					</div>
+				</li>
+				<!-- backoffice -->
+				{% if is_granted('ROLE_ADMIN') %}
+					<div class="mx-2 my-2">
+					<a type="button" class="cat-menu d-none d-lg-block" href="{{ path('admin')}}">Backoffice</a>
+					</div>
+				{% endif %}
+			</ul>
+
+			<!-- recherche -->
+			<form class="d-flex mx-5" action="{{ path('search_term_results') }}">
+				<input class="form-control me-sm-2 bg-filter text-light btn-search" name="searchTerm" type="search" placeholder="Rechercher">
+				<button class="btn btn-search mx-2 my-sm-0" type="submit">
+					<i class="bi bi-search"></i>
+				</button>
+			</form>
+
+            <!-- avatar et bouton profil -->
+			{# If user is connected, login button switch to logout button #}
+			{% if app.user %}
+				{# If user got a image's profile, the link to his profile is the image, otherwise it's a button #}
+				{% if app.user.image != null %}
+					{% set userImage = app.request.server.get('USER_IMAGES') %}
+						<img src="{{ asset(userImage ~ '/' ~ app.user.image) }}"
+						class="card-img rounded-lg d-none d-lg-block" alt="" style="width: 3rem; height: 3rem">
+				{% else %}
+					<img src="{{ asset('assets/images/utilisateurs/anonymous.jpg') }}" class="card-img rounded-lg d-none d-lg-block" alt="..." style="width: 3rem; height: 3rem">
+				{% endif %}
+					<div class="mx-2 my-2">
+					<a type="button" class="btn btn-search d-none d-lg-block mx-2" href="{{ path('user_show', {id:app.user.id}) }}">Profil</a>
+					</div>
+            
+			<!-- connexion et deconnexion -->
+				<a type="button" class="btn btn-logout d-none d-lg-block" href="{{ path('app_logout') }}">Deconnexion</a>
+			{% else %}
+				{# <button type="button" class="btn btn-primary mx-2 my-sm-0 d-none d-lg-block">QUIZ</button> #}
+				<a type="button" class="btn my-2 my-sm-0 d-none d-lg-block btn-login" href="{{ path('app_login') }}">S'enregistrer/Connexion</a>
+			{% endif %}
+
+		</div>
+	</div>
+</nav>
+

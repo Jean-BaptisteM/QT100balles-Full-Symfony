@@ -1,0 +1,47 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+{{ user.nickname }}
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">{{ user.nickname }}</h1>
+
+	<table class="table my-2 card-purple">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ user.id }}</td>
+			</tr>
+			<tr>
+				<th>Surnom</th>
+				<td>{{ user.nickname }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ user.email }}</td>
+			</tr>
+			{% if user.image != null %}
+			<tr>
+				<th>Image</th>
+				<td><img src="{{ asset('assets/images/utilisateurs/' ~ user.image) }}" class="max-image-size-back"></td>
+			</tr>
+			{% endif %}
+			<tr>
+				<th>Description</th>
+				<td>{{ user.description }}</td>
+			</tr>
+			<tr>
+				<th>Rôles</th>
+				<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+			</tr>
+		</tbody>
+
+	</table>
+
+	<a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-purple mx-2 my-2 col-4">Modifier</a>
+
+	{{ include('back/user/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin_user_index') }}" class="btn btn-purple mx-2 my-2 col-4">Retour à la liste</a>
+
+{% endblock %}

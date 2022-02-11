@@ -1,0 +1,47 @@
+{% set currentRoute = app.request.get('_route') %}
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand px-0 text-center" href="{{ path('admin') }}"><img src="{{ asset('assets/images/logo.png') }}" width="50%" alt="logo" class="{{ currentRoute == 'admin' ? 'animate__animated animate__jackInTheBox':'' }}"/></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarColor02">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="cat-menu d-none d-lg-block mx-4" href="{{ path('home')}}">FrontOffice</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="cat-menu dropdown-toggle d-none d-lg-block mx-4" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Medias</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_media_category_index')}}">Catégories</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_media_index', {id:1})}}">Films</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_media_index', {id:2})}}">Séries</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_media_index', {id:3})}}">Dessins Animés</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_media_index', {id:4})}}">Émissions</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_type_index')}}">Genres</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_person_index')}}">Personnes</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="cat-menu dropdown-toggle d-none d-lg-block mx-4" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Items</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_item_category_index')}}">Catégories</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_item_index', {id:3})}}">Jouets</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_item_index', {id:2})}}">Objets</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_item_index', {id:1})}}">Bonbons</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="cat-menu dropdown-toggle d-none d-lg-block mx-4" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Utilisateurs</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_user_index') }}">Utilisateurs</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_comment_media_index') }}">Commentaires Média</a>
+						<a class="dropdown-item sous-menu-dropdown" href="{{ path('admin_comment_item_index') }}">Commentaires Item</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

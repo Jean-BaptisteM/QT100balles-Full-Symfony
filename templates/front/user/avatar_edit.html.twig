@@ -1,0 +1,46 @@
+{% extends "front/base.html.twig" %}
+
+{% block title %}Modifier mon Avatar
+{% endblock %}
+{% block body %}
+
+	<div class="container">
+		<div class="col-12 text-center my-4">
+			<h1 id="detail-title">Modifier mon Avatar</h1>
+		</div>
+
+		<div class="mb-3">
+			<div
+				class="row d-flex justify-content-around">
+				<!-- avatar -->
+				<div class="m-3 p-3 col-11 col-lg-5 text-center">
+					<h3 class="user-connect-title mx-2">Avatar actuel</h3>
+					{% if user.image != null %}
+						{# We get the path of the images folder from the .env and we store it in a variable #}
+						{% set userImage = app.request.server.get('USER_IMAGES') %}
+						<img src="{{ asset(userImage ~ '/' ~ user.image) }}" class="card-img rounded-lg" alt="..." style="width: 20rem, center;">
+
+					{% endif %}
+				</div>
+				<div class="m-3 p-3 col-11 col-lg-6 text-center align-self-center">
+
+					{{ form_start(form) }}
+					{% do form.nickname.setRendered() %}
+					{% do form.email.setRendered() %}
+					{% do form.password.setRendered() %}
+					{% do form.description.setRendered() %}
+					{% do form.roles.setRendered() %}
+					{% do form.charte.setRendered() %}
+					{{ form_widget(form,{'attr': {'class': 'form-purple'} }) }}
+					<button class="btn btn-purple my-2 col-4">{{ button_label|default('Modifier') }}</button>
+					{{ form_end(form) }}
+                    
+
+					<a class="btn btn-purple mx-auto my-2 col-4" href="{{ path('user_show', {'id': user.id}) }}">Retour au profil</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>{% endblock %}

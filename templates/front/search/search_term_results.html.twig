@@ -1,0 +1,106 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}
+	Résultats pour
+	{{ searchTerm }}
+{% endblock %}
+
+{% block body %}
+	<div class="row justify-content-end">
+		<div class="row d-flex mx-2 col-12 col-lg-9 col-xl-6">
+			{% if app.user %}
+				<ul class="nav nav-pills col my-1 justify-content-end">
+					<li class="nav-item dropdown align-self-center">
+						<a class="cat-menu dropdown-toggle mx-3" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajouter du contenu</a>
+						<div class="dropdown-menu" style="">
+							<a class="dropdown-item sous-menu-dropdown" href="{{ path('media_new') }}">Ajouter un Média</a>
+							<a class="dropdown-item sous-menu-dropdown" href="{{ path('person_new') }}">Ajouter une Personne</a>
+							<a class="dropdown-item sous-menu-dropdown" href="{{ path('item_new') }}">Ajouter un Item</a>
+						</div>
+					</li>
+				</ul>
+			{% endif %}
+			<form action="{{ path('type_filter') }}" class="form-inline m-1 col text-center">
+				<div class="d-flex">
+					<select name="filterType" class="form-control m-1 my-sm-0 bg-filter text-light btn-search" id="filterType">
+						<option selected>Trier par Genre</option>
+						{% for type in types %}
+							<option value="{{ type.name }}">{{ type.name }}</option>
+						{% endfor %}
+					</select>
+					<div class="text-end">
+						<button class="btn btn-search m-1 my-sm-0" type="submit">
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+			<form action="{{ path('year_filter') }}" class="form-inline m-1 col text-center">
+				<div class="d-flex">
+					<select name="filterYear" class="form-control m-1 my-sm-0 bg-filter text-light btn-search" id="filterYear">
+						<option selected>Trier par Année</option>
+						{% for year in 1980..1999 %}
+							<option value="{{ year }}">{{ year }}</option>
+						{% endfor %}
+					</select>
+					<div class="text-end">
+						<button class="btn btn-search m-1 my-sm-0" type="submit">
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="col text-center my-4">
+		<h1 id="detail-title">Résultats pour
+			{{ searchTerm }}</h1>
+	</div>
+	{% if mediasSearchTermResults or itemsSearchTermResults != null %}
+		<div class="row d-flex justify-content-around">
+			{% for media in mediasSearchTermResults %}
+				<div class="bloc-detail m-3 p-3 col-5 col-lg-3 col-xxl-2 card-purple">
+					<a href="{{ path('media_show', {id:media.id}) }}">
+						{% if media.image != null %}
+							<img src="{{ media.image }}" class="img-persons-media d-block user-select-none mx-auto rounded" aria-label="Image" focusable="false" role="img"/>
+						{% else %}
+							{# use of the service set up in App\Service\FileService.php to check whether a file exists or not #}
+							{% if  file_service.exist(asset('api/' ~ media.originalTitle ~ '.jpg')) == true %}
+								<img src="{{ asset('assets/images/api/' ~ media.originalTitle ~ '.jpg') }}" class="img-persons-media d-block user-select-none mx-auto rounded" aria-label="Image" focusable="false" role="img"/>
+							{% else %}
+								<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-persons-media d-block user-select-none mx-auto rounded mb-3" width="90%" aria-label="Image" focusable="false" role="img"/>
+							{% endif %}
+						{% endif %}
+					</a>
+					<h3 class="card-header bloc-contour-detail text-center mt-2">
+						<a href="{{ path('media_show', {id:media.id}) }}" class="link-card">{{ media.title }}</a>
+					</h3>
+					<div class="card-body">
+						<p class="card-text text-light text-center">{{ media.synopsis|u.truncate(150, '...',false) }}</p>
+					</div>
+				</div>
+			{% endfor %}
+			{% for item in itemsSearchTermResults %}
+				<div class="bloc-detail m-3 p-3 col-5 col-lg-3 col-xxl-2 card-purple">
+					<a href="{{ path('item_show', {id:item.id}) }}">
+						{% if item.image != null %}
+							<img src="{{ asset('assets/images/items/' ~ item.image) }}" class="img-persons-media |u.truncate(150, '...',false) }}d-block user-select-none rounded" aria-label="Image" focusable="false" role="img"/>
+						{% else %}
+							<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-persons-media d-block user-select-none mx-auto rounded mb-3" width="90%" aria-label="Image" focusable="false" role="img"/>
+						{% endif %}
+					</a>
+					<h3 class="card-header bloc-contour-detail text-center mt-2">
+						<a href="{{ path('item_show', {id:item.id}) }}" class="link-card">{{ item.name }}</a>
+					</h3>
+					<div class="card-body">
+						<p class="card-text text-light text-center">{{ item.preface|u.truncate(150, '...',false) }}</p>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<div class="col text-center my-4">
+			<h3>(｡╯︵╰｡) Aucun résultat correspondant à votre recherche 	(｡╯︵╰｡)</h3>
+		</div>
+	{% endif %}
+</div>{% endblock %}

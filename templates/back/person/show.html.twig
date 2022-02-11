@@ -1,0 +1,73 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+	{{ person.firstname }}
+	{{ person.lastname }}
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">{{ person.firstname }}
+		{{ person.lastname }}</h1>
+
+	<table class="table my-2 card-purple">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ person.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ person.firstname }}</td>
+			</tr>
+			{% if person.lastname != null %}
+				<tr>
+					<th>Nom</th>
+					<td>{{ person.lastname }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Date de naissance</th>
+				<td>{{ person.birthdate|date('d/m/Y') }}</td>
+			</tr>
+			<tr>
+				<th>Catégorie</th>
+				<td>{{ person.category }}</td>
+			</tr>
+			<tr>
+				<th>Nationalité</th>
+				<td>{{ person.nationality }}</td>
+			</tr>
+			<tr>
+				<th>Image</th>
+				{% if person.image != null %}
+					<td><img src="{{ person.image }}" class="max-image-size-back"/></td>
+				{% else %}
+					<td>Pas d'image en BDD ╮(︶︿︶)╭</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<th>Médias associés</th>
+				<td>
+					{% for media in person.medias %}
+						{{ media.title }}<br>
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<th>Créé le</th>
+				<td>{{ person.createdAt ? person.createdAt|date('d/m/Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Mis à jour le</th>
+				<td>{{ person.updatedAt ? person.updatedAt|date('d/m/Y') : '' }}</td>
+			</tr>
+		</tbody>
+
+	</table>
+
+	<a href="{{ path('admin_person_edit', {id:person.id}) }}" class="btn btn-purple mx-2 my-2 col-4">Modifier</a>
+
+	{{ include('back/person/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin_person_index') }}" class="btn btn-purple my-2 mx-2 col-4">Retour à la liste</a>
+
+{% endblock %}

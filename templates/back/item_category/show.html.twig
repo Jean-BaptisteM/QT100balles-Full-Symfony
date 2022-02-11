@@ -1,0 +1,31 @@
+{% extends 'back/base.html.twig' %}
+
+
+{% block title %}
+{{ item_category.name }}
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">{{ item_category.name }}</h1>
+
+	<table class="table my-2 card-purple">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ item_category.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ item_category.name }}</td>
+			</tr>
+		</tbody>
+
+	</table>
+
+	<a href="{{ path('admin_item_category_edit', {id:item_category.id}) }}" class="btn btn-purple mx-2 my-2 col-4">Modifier</a>
+
+	{{ include('back/item_category/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin_item_category_index') }}" class="btn btn-purple mx-2 my-2 col-4">Retour à la liste</a>
+
+{% endblock %}
+

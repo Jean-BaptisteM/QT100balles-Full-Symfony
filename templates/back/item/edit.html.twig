@@ -1,0 +1,15 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Éditer cet Item
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">Éditer cet Item</h1>
+
+	{{ include('back/item/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+	{{ include('back/item/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin') }}" class="btn btn-purple my-2 mx-2 col-4">Retour au backoffice</a>
+{% endblock %}
+

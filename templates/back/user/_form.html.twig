@@ -1,0 +1,11 @@
+{% set currentRoute = app.request.get('_route') %}
+
+{{ form_start(form) }}
+{% if currentRoute  == 'admin_user_edit' %}
+	{{form_widget(form.password, {'attr': {'style': 'display:none'}}
+	) }}
+{% endif %}
+{{ form_widget(form,{'attr': {'class': 'form-purple'} }) }}
+    <p class="form-purple">( * Champs obligatoires )</p>
+<button class="btn btn-purple my-2 col-4">{{ button_label|default('Créer') }}</button>
+{{ form_end(form) }}

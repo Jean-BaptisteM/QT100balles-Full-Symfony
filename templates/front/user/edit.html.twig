@@ -1,0 +1,19 @@
+{% set currentRoute = app.request.get('_route') %}
+
+{% extends "front/base.html.twig" %}
+
+{% block title %}Modifier{% endblock %}
+{% block body %}
+
+    <div class="container">
+    <div class="col-12 text-center my-4">
+		<h1 id="detail-title">Modifier mon Profil</h1>
+	</div>
+
+    {{ include('front/user/_form.html.twig', {'button_label': 'Valider'}) }}
+
+    <a class="btn btn-purple mx-auto my-2 col-4" href="{{ path('user_show', {'id': user.id}) }}">Retour au profil</a>
+
+    </div>
+
+{% endblock %}

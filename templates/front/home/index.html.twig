@@ -1,0 +1,161 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}QT100balles
+{% endblock %}
+
+{% block body %}
+	<!-- Catégories media et bannière -->
+	<div class="row align-items-center justify-content-around m-3 pt-4">
+		<div class="col-5 col-lg-3 mb-5">
+			<div class="container-accueil">
+				<a href="{{ path('media_liste', {id:1})}}"><img src="{{ asset('assets/images/categories/categorie-films.png') }}" class="card-img-top card-purple rounded mb-3 card-movie" alt="films"/></a>
+				<a href="{{ path('media_liste', {id:2})}}"><img src="{{ asset('assets/images/categories/categorie-series-tv.png') }}" class="card-img-top card-purple rounded card-serie" alt="series tv"/></a>
+			</div>
+		</div>
+		<div class="col-10 order-first col-lg-5 order-lg-0 mb-5">
+			<div class="container-accueil">
+				<a href="{{ path('home') }}"><img src="{{ asset('assets/images/banniere.png') }}" class="card-img-top img-banniere card-purple rounded card-banner" alt="bannière"/></a>
+			</div>
+		</div>
+		<div class="col-5 col-lg-3 mb-5">
+			<div class="container-accueil">
+				<a href="{{ path('media_liste', {id:3})}}"><img src="{{ asset('assets/images/categories/categorie-dessins-animes.png') }}" class="card-img-top mb-3 card-purple rounded card-cartoon" alt="dessins animés"/></a>
+				<a href="{{ path('media_liste', {id:4})}}"><img src="{{ asset('assets/images/categories/categorie-emissions.png') }}" class="card-img-top card-purple rounded card-tvShow" alt="emissions"/></a>
+			</div>
+		</div>
+	</div>
+
+	<!-- quizz -->
+	{# <div class="d-grid gap-2">
+							  <button class="btn btn-lg btn-primary m-5 mt-5 pt-4 pb-4" type="button">QUIZ</button>
+							</div> #}
+
+	<!-- carousel -->
+	{# <div class="row align-items-center justify-content-around m-5 mt-5 mb-5">
+			{% for item in items %}
+				<div class="col-5 col-xl-3 mb-5">
+					<div class="container-accueil">
+						<a href="{{ path('item_show', {id:item.id}) }}" class="card-purple">
+							{% if item.image != null %}
+								<img src="{{ asset('assets/images/items/' ~ item.image) }}" class="card-img-top rounded" alt="derniers articles">
+							{% else %}
+								<img src="{{ asset('assets/images/mire_error.jpg') }}" class="card-img-top rounded" alt="derniers articles">
+							{% endif %}
+						</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div> #}
+
+		<div class="row justify-content-center my-3"> 
+			<div class="col-6 carousel"id="carousel-1" auto-scroll="7000">
+				{% for item in items %}
+					<div class="carousel__item text-center">
+						<a href="{{ path('item_show', {id:item.id}) }}" class="card-purple">
+							{% if item.image != null %}
+								<img src="{{ asset('assets/images/items/' ~ item.image) }}" class="card-img-top rounded carousel-img-limit" alt="derniers articles">
+							{% else %}
+								<img src="{{ asset('assets/images/mire_error.jpg') }}" class="card-img-top rounded carousel-img-limit" alt="derniers articles">
+							{% endif %}
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+	<!-- catégories items -->
+	<div
+		class="row d-flex justify-content-around pt-5 pb-4">
+		<!-- bonbons -->
+		<div class="card bloc-detail col-7 col-xl-3 mb-5">
+			<a href="{{ path('item_liste', {id:1})}}">
+				<div class="card-header bloc-contour-detail card-header-accueil mt-2">bonbons</div>
+			</a>
+			<div class="card-body">
+				{% for candy in candies %}
+					<div class="row my-4 accueil-items p-3">
+						<div class="col-3">
+							<a href="{{ path('item_show', {id:candy.id}) }}">
+								{% if candy.image != null %}
+									<img src="{{ asset('assets/images/items/' ~ candy.image) }}" class="card-img-top rounded" alt="derniers articles">
+								{% else %}
+									<img src="{{ asset('assets/images/mire_error.jpg') }}" class="card-img-top rounded" alt="derniers articles">
+								{% endif %}
+							</a>
+						</div>
+						<div class="col-9">
+							<h5 class="text-light">
+								<a href="{{ path('item_show', {id:candy.id}) }}">{{ candy.name }}</a>
+							</h5>
+							<form action="{{ path('year_filter') }}" class="ruban col-2">
+								<input name="filterYear" type="hidden" value="{{ candy.year }}">
+								<button type="submit" class="year-tag float-right m-2">{{ candy.year }}</button>
+							</form>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<!-- objets -->
+		<div class="card bloc-detail col-7 col-xl-3 mb-5">
+			<a href="{{ path('item_liste', {id:2})}}">
+				<div class="card-header bloc-contour-detail card-header-accueil mt-2">Objets</div>
+			</a>
+			<div class="card-body">
+				{% for object in objects %}
+					<div class="row my-4 accueil-items p-3">
+						<div class="col-3">
+							<a href="{{ path('item_show', {id:object.id}) }}">
+								{% if object.image != null %}
+									<img src="{{ asset('assets/images/items/' ~ object.image) }}" class="card-img-top rounded" alt="derniers articles">
+								{% else %}
+									<img src="{{ asset('assets/images/mire_error.jpg') }}" class="card-img-top rounded" alt="derniers articles">
+								{% endif %}
+							</a>
+						</div>
+						<div class="col-9">
+							<h5 class="text-light">
+								<a href="{{ path('item_show', {id:object.id}) }}">{{ object.name }}</a>
+							</h5>
+							<form action="{{ path('year_filter') }}" class="ruban col-2">
+								<input name="filterYear" type="hidden" value="{{ object.year }}">
+								<button type="submit" class="year-tag float-right m-2">{{ object.year }}</button>
+							</form>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<!-- jouets -->
+		<div class="card bloc-detail col-7 col-xl-3 mb-5">
+			<a href="{{ path('item_liste', {id:3})}}">
+				<div class="card-header bloc-contour-detail card-header-accueil mt-2">jouets</div>
+			</a>
+			<div class="card-body">
+				{% for toy in toys %}
+					<div class="row my-4 accueil-items p-3">
+						<div class="col-3">
+							<a href="{{ path('item_show', {id:toy.id}) }}">
+								{% if toy.image != null %}
+									<img src="{{ asset('assets/images/items/' ~ toy.image) }}" class="card-img-top rounded" alt="derniers articles">
+								{% else %}
+									<img src="{{ asset('assets/images/mire_error.jpg') }}" class="card-img-top rounded" alt="derniers articles">
+								{% endif %}
+							</a>
+						</div>
+						<div class="col-9">
+							<h5 class="text-light">
+								<a href="{{ path('item_show', {id:toy.id}) }}">{{ toy.name }}</a>
+							</h5>
+							<form action="{{ path('year_filter') }}" class="ruban col-2">
+								<input name="filterYear" type="hidden" value="{{ toy.year }}">
+								<button type="submit" class="year-tag float-right m-2">{{ toy.year }}</button>
+							</form>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

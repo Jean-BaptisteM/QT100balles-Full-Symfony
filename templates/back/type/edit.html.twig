@@ -1,0 +1,14 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+Éditer ce Genre
+{% endblock %}
+{% block body %}
+	<h1 class="text-center my-4" id="detail-title">Éditer ce Genre</h1>
+
+	{{ include('back/type/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+	{{ include('back/type/_delete_form.html.twig') }}
+
+	<a href="{{ path('admin_type_index') }}" class="btn btn-purple mx-2 my-2 col-4">Retour à la liste</a>
+{% endblock %}

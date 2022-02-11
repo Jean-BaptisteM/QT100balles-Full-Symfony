@@ -1,0 +1,128 @@
+<div class="row m-5 d-flex justify-content-center">
+	<div
+		class="col-10 col-lg-12 my-1">
+		<!-- menu -->
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			{% if media.mediaCategories.name == "Film" or media.mediaCategories.name == "Série" %}
+				<li class="nav-item" role="presentation">
+					<button class="menu-persons active" id="actor-tab" data-bs-toggle="tab" data-bs-target="#actor" type="button" role="tab" aria-controls="actor" aria-selected="true">Acteurs</button>
+				</li>
+			{% endif %}
+			{% if media.mediaCategories.name == "Film" or media.mediaCategories.name == "Série" or media.mediaCategories.name == "Dessin Animé" %}
+				<li class="nav-item" role="presentation">
+					<button class="menu-persons" id="director-tab" data-bs-toggle="tab" data-bs-target="#director" type="button" role="tab" aria-controls="director" aria-selected="false">Réalisateur</button>
+				</li>
+			{% endif %}
+			{% if media.mediaCategories.name == "Emission" %}
+				<li class="nav-item" role="presentation">
+					<button class="menu-persons active" id="animator-tab" data-bs-toggle="tab" data-bs-target="#animator" type="button" role="tab" aria-controls="animator" aria-selected="true">Animateurs</button>
+				</li>
+			{% endif %}
+			<li class="nav-item" role="presentation">
+				<button class="menu-persons" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">Résumé</button>
+			</li>
+			{# <li class="col text-end">
+								<div style="color: orange;">
+									<i class="bi bi-star-fill"></i>
+									<i class="bi bi-star-fill"></i>
+									<i class="bi bi-star-fill"></i>
+									<i class="bi bi-star-fill"></i>
+									<i class="bi bi-star-half"></i>
+								</div>
+							</li> #}
+		</ul>
+
+		<div
+			class="tab-content" id="myTabContent">
+
+			<!-- acteurs -->
+			{% if media.mediaCategories.name == "Film" or media.mediaCategories.name == "Série" %}
+				<div class="card col tab-pane fade show active" id="actor" role="tabpanel" aria-labelledby="actor-tab">
+					<div
+						class="bloc-detail row d-flex justify-content-around">
+						{# to filter the actors of the directors of the animators, we loop on media.persons if the string
+													corresponds to the one recorded in the category field #}
+						{% for actor in media.persons %}
+							{% if actor.category == 'Acteur' %}
+								<div class="card bloc-contour-detail m-3 p-3 col-5 col-lg-3 col-xxl-2">
+									<a href="{{ path('person_show', {id:actor.id}) }}">
+										{% if actor.image != null %}
+											<img src="{{ actor.image }}" class="img-persons-media d-block user-select-none rounded" aria-label="Image" focusable="false" role="img"/>
+										{% else %}
+											<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-persons-media d-block user-select-none mx-auto rounded mb-3" width="90%" aria-label="Image" focusable="false" role="img"/>
+										{% endif %}
+									</a>
+									<h3 class="card-body title-persons-media">
+										<a href="{{ path('person_show', {id:actor.id}) }}" class="link-card">
+											{{ actor.firstname }}
+											{{ actor.lastname}}
+										</a>
+									</h3>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+			<!-- réalisateurs -->
+			{% if media.mediaCategories.name == "Film" or media.mediaCategories.name == "Série" or media.mediaCategories.name == "Dessin Animé" %}
+				<div class="card bloc-detail tab-pane fade" id="director" role="tabpanel" aria-labelledby="director-tab">
+					<div class="row d-flex justify-content-around">
+						{% for director in media.persons %}
+							{% if director.category == 'Réalisateur' %}
+								<div class="card bloc-contour-detail m-3 p-3 col-5 col-lg-3 col-xxl-2">
+									<a href="{{ path('person_show', {id:director.id}) }}">
+										{% if director.image != null %}
+											<img src="{{ director.image }}" class="img-persons-media d-block user-select-none rounded" aria-label="Image" focusable="false" role="img"/>
+										{% else %}
+											<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-persons-media d-block user-select-none mx-auto rounded mb-3" width="90%" aria-label="Image" focusable="false" role="img"/>
+										{% endif %}
+									</a>
+									<h3 class="card-body title-persons-media">
+										<a href="{{ path('person_show', {id:director.id}) }}" class="link-card">
+											{{ director.firstname }}
+											{{ director.lastname}}
+										</a>
+									</h3>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+			<!-- Emission -->
+			{% if media.mediaCategories.name == "Emission" %}
+				<div class="card bloc-detail col tab-pane fade show active" id="animator" role="tabpanel" aria-labelledby="animator-tab">
+					<div class="row d-flex justify-content-around">
+						{% for animator in media.persons %}
+							{% if animator.category == 'Animateur' %}
+								<div class="card bloc-contour-detail m-3 p-3 col-5 col-lg-3 col-xxl-2">
+										<a href="{{ path('person_show', {id:animator.id}) }}">
+									{% if animator.image != null %}
+											<img src="{{ animator.image }}" class="img-persons-media d-block user-select-none rounded" aria-label="Image" focusable="false" role="img"/>
+									{% else %}
+										<img src="{{ asset('assets/images/mire_error.jpg') }}" class="img-persons-media d-block user-select-none mx-auto rounded mb-3" width="90%" aria-label="Image" focusable="false" role="img"/>
+									{% endif %}
+										</a>
+									<h3 class="card-body title-persons-media">
+										<a href="{{ path('person_show', {id:animator.id}) }}" class="link-card">
+											{{ animator.firstname }}
+											{{ animator.lastname}}
+										</a>
+									</h3>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+
+			<!-- résumé -->
+			<div class="card bloc-detail tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+				<p class="bloc-contour-detail bloc-resume-media m-5 p-5">
+					{{ media.summary }}
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

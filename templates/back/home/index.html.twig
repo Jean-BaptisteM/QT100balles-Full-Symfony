@@ -1,0 +1,36 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}QT100Balles BackOffice{% endblock %}
+
+{% block body %}
+
+<div class="col-12 my-4 text-center">
+    <h1 id="detail-title">Bienvenue sur le BackOffice</h1>
+</div>
+
+<div class="list-group my-4">
+<h3 class="list-group-item card-purple">Médias</h3>
+  <a href="{{ path('admin_media_category_index')}}" class="list-group-item list-group-item-action alert-primary card-purple">Catégories de Médias</a>
+  <a href="{{ path('admin_media_index', {id:1})}}" class="list-group-item list-group-item-action alert-secondary card-purple">Liste des Films</a>
+  <a href="{{ path('admin_media_index', {id:2})}}" class="list-group-item list-group-item-action alert-primary card-purple">Liste des Séries</a>
+  <a href="{{ path('admin_media_index', {id:3})}}" class="list-group-item list-group-item-action alert-secondary card-purple">Liste des Dessins Animés</a>
+  <a href="{{ path('admin_media_index', {id:4})}}" class="list-group-item list-group-item-action alert-primary card-purple">Liste des Émissions</a>
+  <a href="{{ path('admin_type_index')}}" class="list-group-item list-group-item-action alert-secondary card-purple">Liste des Genres</a>
+  <a href="{{ path('admin_person_index')}}" class="list-group-item list-group-item-action alert-primary card-purple">Liste des Personnes</a>
+</div>
+
+<div class="list-group my-4">
+<h3 class="list-group-item card-purple">Items</h3>
+  <a href="{{ path('admin_item_category_index')}}" class="list-group-item list-group-item-action alert-primary card-purple">Catégories d'items</a>
+  <a href="{{ path('admin_item_index', {id:3})}}" class="list-group-item list-group-item-action alert-secondary card-purple">Liste des Jouets</a>
+  <a href="{{ path('admin_item_index', {id:2})}}" class="list-group-item list-group-item-action alert-primary card-purple">Liste des Objets</a>
+  <a href="{{ path('admin_item_index', {id:1})}}" class="list-group-item list-group-item-action alert-secondary card-purple">Liste des Bonbons</a>
+</div>
+
+<div class="list-group my-4">
+<h3 class="list-group-item card-purple">Utilisateurs</h3>
+  <a href="{{ path('admin_user_index') }}" class="list-group-item list-group-item-action alert-primary card-purple">Liste des utilisateurs</a>
+  <a href="{{ path('admin_comment_media_index') }}" class="list-group-item list-group-item-action alert-secondary card-purple">Commentaires des médias</a>
+  <a href="{{ path('admin_comment_item_index') }}" class="list-group-item list-group-item-action alert-primary card-purple">Commentaires des items</a>
+</div>
+{% endblock %}

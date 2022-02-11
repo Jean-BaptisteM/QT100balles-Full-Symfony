@@ -1,0 +1,48 @@
+{% extends "front/base.html.twig" %}
+
+{% block title %}Modifier mon Anecdote
+{% endblock %}
+{% block body %}
+
+	<div class="container">
+		<div class="col-12 text-center my-4">
+			<h1 id="detail-title">Modifier mon Anecdote</h1>
+		</div>
+
+		<div class="mb-3">
+			<div
+				class="row d-flex justify-content-around">
+				<div class="m-3 p-3 col-11 col-lg-5 text-center">
+					<h3 class="user-connect-title mx-2">Anecdote actuelle</h3>
+						<div class="bloc-contour-detail p-2">
+						   <h5 class="card-title card-title-detail text-light my-2">Quand j'étais petit(e) je croyais que :</h5>
+						        {% if user.description != null %}
+							       <p class="card-text anecdote-rep text-dark my-2">{{ user.description }}</p>
+								   <a class="btn btn my-2 btn-purple" href="{{ path('user_edit', {'id': user.id}) }}" type="button">Modifier votre anecdote</a>
+								   {% else %}
+								   <a class="btn btn my-2 btn-purple" href="{{ path('user_edit', {'id': user.id}) }}" type="button">Ajouter une anecdote</a>
+						         {% endif %}
+						</div>
+					</div>
+				<div class="m-3 p-3 col-11 col-lg-6 text-center align-self-center">
+
+					{{ form_start(form) }}
+                    {% do form.nickname.setRendered() %}
+                    {% do form.email.setRendered() %}
+					{% do form.password.setRendered() %}
+					{% do form.image.setRendered() %}
+					{% do form.roles.setRendered() %}
+					{% do form.charte.setRendered() %}
+					{{ form_widget(form,{'attr': {'class': 'form-purple'} }) }}
+					<button class="btn btn-purple my-2 col-4">{{ button_label|default('Modifier') }}</button>
+					{{ form_end(form) }}
+                    
+
+					<a class="btn btn-purple mx-auto my-2 col-4" href="{{ path('user_show', {'id': user.id}) }}">Retour au profil</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>{% endblock %}
